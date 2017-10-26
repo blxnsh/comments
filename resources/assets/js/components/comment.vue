@@ -53,7 +53,7 @@ export default {
   props: ['comment', 'array'],
   methods: {
     replyOffset(value){
-      value = value < 11 ? value : 10;
+      value = value < 9 ? value : 8;
       let offset = 'col-xs-offset-' + value;
       return offset;
     },
@@ -95,9 +95,13 @@ export default {
       });
     axios.delete('/api/deletecomment', {params: {id: value.id}})
           .catch(error => console.log(error));
-
+console.log(this.array.length);
+      if(this.array.findIndex(i => i.id == value.id) == this.array.length - 1){
+          this.array.splice(-1,1);
+      } else {
       this.array.splice(this.array.findIndex(i => i.id == value.id), 1);
     }
+  }
   });
 },
     updateComment(value) {

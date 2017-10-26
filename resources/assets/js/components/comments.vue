@@ -54,11 +54,15 @@ methods: {
     return value;
   },
   addComment(value){
-    this.crud.parent_id = value.parent_id;
-    this.crud.level = value.level;
-    this.crud.body = value.body;
+    this.crud = new Crud({
+      parent_id: value.parent_id,
+      level: value.level,
+      body: value.body,
+    });
     this.crud.post('/api/postcomment')
-            .then(response => this.commentsArray.push(response))
+            .then(response => {
+                    this.commentsArray.push(response);
+                  })
                 .catch(error => console.log(error.message));
 
   this.crud = new Crud({

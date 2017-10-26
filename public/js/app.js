@@ -16267,7 +16267,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -16345,11 +16345,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     addComment: function addComment(value) {
       var _this2 = this;
 
-      this.crud.parent_id = value.parent_id;
-      this.crud.level = value.level;
-      this.crud.body = value.body;
+      this.crud = new Crud({
+        parent_id: value.parent_id,
+        level: value.level,
+        body: value.body
+      });
       this.crud.post('/api/postcomment').then(function (response) {
-        return _this2.commentsArray.push(response);
+        _this2.commentsArray.push(response);
       }).catch(function (error) {
         return console.log(error.message);
       });
@@ -16582,7 +16584,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -16651,7 +16653,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   props: ['comment', 'array'],
   methods: {
     replyOffset: function replyOffset(value) {
-      value = value < 11 ? value : 10;
+      value = value < 9 ? value : 8;
       var offset = 'col-xs-offset-' + value;
       return offset;
     },
@@ -16701,10 +16703,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           axios.delete('/api/deletecomment', { params: { id: value.id } }).catch(function (error) {
             return console.log(error);
           });
-
-          _this2.array.splice(_this2.array.findIndex(function (i) {
+          console.log(_this2.array.length);
+          if (_this2.array.findIndex(function (i) {
             return i.id == value.id;
-          }), 1);
+          }) == _this2.array.length - 1) {
+            _this2.array.splice(-1, 1);
+          } else {
+            _this2.array.splice(_this2.array.findIndex(function (i) {
+              return i.id == value.id;
+            }), 1);
+          }
         }
       });
     },
