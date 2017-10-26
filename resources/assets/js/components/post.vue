@@ -7,7 +7,7 @@
                Абсолютно рандомный пост
              </div>
              <div class="panel-body">
-              <img src="http://purrsngrrs.com/wp-content/uploads/2013/04/images.jpg" alt="Милые папуги" width="80%">
+              <img src="http://purrsngrrs.com/wp-content/uploads/2013/04/images.jpg" alt="Милые папуги" width="100%">
              </div>
          </div>
       </div>

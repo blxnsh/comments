@@ -16161,7 +16161,7 @@ var staticRenderFns = [
                   src:
                     "http://purrsngrrs.com/wp-content/uploads/2013/04/images.jpg",
                   alt: "Милые папуги",
-                  width: "80%"
+                  width: "100%"
                 }
               })
             ])
@@ -16582,7 +16582,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -16669,7 +16669,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.crud.post('/api/postcomment').then(function (response) {
         if (typeof _this.array[_this.array.findIndex(function (i) {
           return i.id == _this.comment.id;
-        })] !== 'undefined') {
+        })] === 'undefined') {
+          _this.array[_this.array.findIndex(function (i) {
+            return i.id == response.id;
+          }) + 1].replies.push(response);
+        } else {
           _this.array[_this.array.findIndex(function (i) {
             return i.id == _this.comment.id;
           })].replies.push(response);

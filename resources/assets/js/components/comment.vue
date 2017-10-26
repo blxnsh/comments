@@ -69,8 +69,13 @@ export default {
       });
       this.crud.post('/api/postcomment')
               .then(response => {
-                if(typeof this.array[this.array.findIndex(i => i.id == this.comment.id)] !== 'undefined'){
-                  this.array[this.array.findIndex(i => i.id == this.comment.id)].replies.push(response);}})
+                  if(typeof this.array[this.array.findIndex(i => i.id == this.comment.id)] === 'undefined'){
+                    this.array[this.array.findIndex(i => i.id == response.id) + 1].replies.push(response);
+                  } else
+                    {
+                      this.array[this.array.findIndex(i => i.id == this.comment.id)].replies.push(response);
+                    }
+                  })
                   .catch(error => console.log(error.message));
 
       this.replyForm = 0;
