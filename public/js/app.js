@@ -16267,7 +16267,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -16351,7 +16351,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         body: value.body
       });
       this.crud.post('/api/postcomment').then(function (response) {
-        _this2.commentsArray.push(response);
+        return _this2.commentsArray.push(response);
       }).catch(function (error) {
         return console.log(error.message);
       });
@@ -16584,7 +16584,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -16597,6 +16597,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentform__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentform___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__commentform__);
+//
 //
 //
 //
@@ -16673,8 +16674,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           return i.id == _this.comment.id;
         })] === 'undefined') {
           _this.array[_this.array.findIndex(function (i) {
-            return i.id == response.id;
+            return i.parent_id == response.parent_id;
           }) + 1].replies.push(response);
+          console.log(_this.array[_this.array.findIndex(function (i) {
+            return i.parent_id == response.parent_id;
+          })]);
         } else {
           _this.array[_this.array.findIndex(function (i) {
             return i.id == _this.comment.id;
@@ -16812,7 +16816,11 @@ var render = function() {
         _vm._v(" "),
         _vm.replyForm == _vm.comment.id
           ? _c("commentform", {
-              attrs: { level: _vm.comment.level, parent_id: _vm.comment.id },
+              attrs: {
+                array: _vm.array,
+                level: _vm.comment.level,
+                parent_id: _vm.comment.id
+              },
               on: { doComment: _vm.addComment }
             })
           : _vm._e()

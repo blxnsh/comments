@@ -60,9 +60,7 @@ methods: {
       body: value.body,
     });
     this.crud.post('/api/postcomment')
-            .then(response => {
-                    this.commentsArray.push(response);
-                  })
+            .then(response => this.commentsArray.push(response))
                 .catch(error => console.log(error.message));
 
   this.crud = new Crud({

@@ -16,6 +16,7 @@
             <commentform
               v-if="replyForm == comment.id"
               @doComment="addComment"
+              :array="array"
               :level="comment.level"
               :parent_id="comment.id"
               >
@@ -47,7 +48,7 @@ export default {
   return   {
     replyForm: 0,
     updcom: '',
-    crud: ''
+    crud: '',
   };
   },
   props: ['comment', 'array'],
@@ -70,7 +71,8 @@ export default {
       this.crud.post('/api/postcomment')
               .then(response => {
                   if(typeof this.array[this.array.findIndex(i => i.id == this.comment.id)] === 'undefined'){
-                    this.array[this.array.findIndex(i => i.id == response.id) + 1].replies.push(response);
+                    this.array[this.array.findIndex(i => i.parent_id == response.parent_id) + 1].replies.push(response);
+                      console.log(this.array[this.array.findIndex(i => i.parent_id == response.parent_id)]);
                   } else
                     {
                       this.array[this.array.findIndex(i => i.id == this.comment.id)].replies.push(response);
