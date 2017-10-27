@@ -94,7 +94,12 @@ export default {
         icon: "success",
       });
     axios.delete('/api/deletecomment', {params: {id: value.id}})
-          .catch(error => console.log(error));
+          .catch(error => {console.log(error)
+            if(this.array.findIndex(i => i.id == value.id) == this.array.length - 1){
+                this.array.splice(-1,1);
+            } else {
+            this.array.splice(this.array.findIndex(i => i.id == value.id), 1);
+          }});
 console.log(this.array.length);
       if(this.array.findIndex(i => i.id == value.id) == this.array.length - 1){
           this.array.splice(-1,1);

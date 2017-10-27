@@ -16584,7 +16584,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -16701,7 +16701,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             icon: "success"
           });
           axios.delete('/api/deletecomment', { params: { id: value.id } }).catch(function (error) {
-            return console.log(error);
+            console.log(error);
+            if (_this2.array.findIndex(function (i) {
+              return i.id == value.id;
+            }) == _this2.array.length - 1) {
+              _this2.array.splice(-1, 1);
+            } else {
+              _this2.array.splice(_this2.array.findIndex(function (i) {
+                return i.id == value.id;
+              }), 1);
+            }
           });
           console.log(_this2.array.length);
           if (_this2.array.findIndex(function (i) {
