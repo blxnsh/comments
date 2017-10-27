@@ -16584,7 +16584,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -16674,11 +16674,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           return i.id == _this.comment.id;
         })] === 'undefined') {
           _this.array[_this.array.findIndex(function (i) {
-            return i.parent_id == _this.comment.id;
+            return i.parent_id == value.id;
           }) + 1].replies.push(response);
-          console.log(_this.array[_this.array.findIndex(function (i) {
-            return i.parent_id == _this.comment.parent_id;
-          })] + 1);
         } else {
           _this.array[_this.array.findIndex(function (i) {
             return i.id == _this.comment.id;
@@ -16708,7 +16705,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             console.log(error);
             if (_this2.array.findIndex(function (i) {
               return i.id == value.id;
-            }) == _this2.array.length - 1) {
+            }) == _this2.array.length) {
               _this2.array.splice(-1, 1);
             } else {
               _this2.array.splice(_this2.array.findIndex(function (i) {
@@ -16716,10 +16713,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               }), 1);
             }
           });
-          console.log(_this2.array.length);
           if (_this2.array.findIndex(function (i) {
             return i.id == value.id;
-          }) == _this2.array.length - 1) {
+          }) == _this2.array.length) {
             _this2.array.splice(-1, 1);
           } else {
             _this2.array.splice(_this2.array.findIndex(function (i) {
