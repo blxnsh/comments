@@ -16674,11 +16674,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           return i.id == _this.comment.id;
         })] === 'undefined') {
           _this.array[_this.array.findIndex(function (i) {
-            return i.parent_id == response.parent_id;
+            return i.parent_id == _this.comment.id;
           }) + 1].replies.push(response);
           console.log(_this.array[_this.array.findIndex(function (i) {
-            return i.parent_id == response.parent_id;
-          })]);
+            return i.parent_id == _this.comment.parent_id;
+          })] + 1);
         } else {
           _this.array[_this.array.findIndex(function (i) {
             return i.id == _this.comment.id;
