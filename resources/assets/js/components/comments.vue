@@ -5,7 +5,7 @@
        <p><h3>Коментарии:</h3></p>
                 <comment v-for="(comment,index) in commentsArray"
                   v-if="comment.level == 0"
-                  :array="commentsArray"
+                  :commArray="commentsArray"
                   :comment="comment"
                   :key="index">
                 </comment >
@@ -43,6 +43,7 @@ data(){
   mounted() {
   axios.get('/api/getcomments')
           .then(response => this.commentsArray = response.data)
+          .then(console.log('Comments loaded!'))
           .catch(error => console.log(error.message));
 },
 methods: {
@@ -60,6 +61,7 @@ methods: {
     });
     this.crud.post('/api/postcomment')
             .then(response => this.commentsArray.push(response))
+            .then(console.log('Comments pushed!'))
                 .catch(error => console.log(error.message));
 
   this.crud = new Crud({

@@ -16267,7 +16267,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -16329,7 +16329,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     axios.get('/api/getcomments').then(function (response) {
       return _this.commentsArray = response.data;
-    }).catch(function (error) {
+    }).then(console.log('Comments loaded!')).catch(function (error) {
       return console.log(error.message);
     });
   },
@@ -16351,7 +16351,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
       this.crud.post('/api/postcomment').then(function (response) {
         return _this2.commentsArray.push(response);
-      }).catch(function (error) {
+      }).then(console.log('Comments pushed!')).catch(function (error) {
         return console.log(error.message);
       });
 
@@ -16583,7 +16583,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -16646,11 +16646,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return {
       replyForm: 0,
       updcom: '',
-      crud: ''
+      crud: '',
+      array: this.commArray
     };
   },
 
-  props: ['comment', 'array'],
+  props: ['comment', 'commArray'],
   methods: {
     replyOffset: function replyOffset(value) {
       value = value < 9 ? value : 8;
@@ -16670,18 +16671,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
       this.crud.post('/api/postcomment').then(function (response) {
         //костыль
-        if (typeof _this.array[_this.array.findIndex(function (i) {
-          return i.id == value.parent_id;
-        })] === 'undefined' || _this.array[_this.array.findIndex(function (i) {
-          return i.id == value.parent_id;
-        })].level == '0') {
-          axios.get('/api/getcomments').then(function (response) {
-            return _this.array = response.data;
-          });
-        }
-        _this.array[_this.array.findIndex(function (i) {
-          return i.id == value.parent_id;
-        })].replies.push(response);
+        axios.get('/api/getcomments').then(function (response) {
+          return _this.array = response.data;
+        });
       }).catch(function (error) {
         return console.log(error.message);
       });
@@ -16703,7 +16695,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             icon: "success"
           });
           axios.delete('/api/deletecomment', { params: { id: value.id } }).then(_this2.array.splice(_this2.array.findIndex(function (i) {
-            return i.id == value.id;
+            return i.id == value.parent_id;
           }), 1)).catch(function (error) {
             console.log(error);
             if (_this2.array.findIndex(function (i) {
@@ -16712,7 +16704,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               _this2.array.splice(-1, 1);
             } else {
               _this2.array.splice(_this2.array.findIndex(function (i) {
-                return i.id == value.id;
+                return i.id == value.parent_id;
               }), 1);
             }
           });
@@ -16839,7 +16831,7 @@ var render = function() {
               ].replies
                 ? _c("comment", {
                     key: index,
-                    attrs: { comment: reply, array: _vm.array }
+                    attrs: { comment: reply, commArray: _vm.array }
                   })
                 : _vm._e()
             }
@@ -16880,7 +16872,7 @@ var render = function() {
             return comment.level == 0
               ? _c("comment", {
                   key: index,
-                  attrs: { array: _vm.commentsArray, comment: comment }
+                  attrs: { commArray: _vm.commentsArray, comment: comment }
                 })
               : _vm._e()
           }),

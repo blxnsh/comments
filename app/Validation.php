@@ -14,7 +14,6 @@ class Validation {
                                'body' => 'required',]);
    }
 
-
   public function commentFails(){
     return $this->validator->fails();
    }

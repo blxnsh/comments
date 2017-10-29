@@ -28,7 +28,7 @@
             v-if="array[array.findIndex(i => i.id == comment.id)].replies"
             v-for="(reply, index) in array[array.findIndex(i => i.id == comment.id)].replies"
             :comment="reply"
-            :array="array"
+            :commArray="array"
             :key="index"
             >
         </comment>
@@ -49,9 +49,10 @@ export default {
     replyForm: 0,
     updcom: '',
     crud: '',
+    array: this.commArray
   };
   },
-  props: ['comment', 'array'],
+  props: ['comment', 'commArray'],
   methods: {
     replyOffset(value){
       value = value < 9 ? value : 8;
@@ -70,13 +71,9 @@ export default {
       });
       this.crud.post('/api/postcomment')
               .then(response => {
-              //костыль
-                  if(typeof this.array[this.array.findIndex(i => i.id == value.parent_id)] === 'undefined' || this.array[this.array.findIndex(i => i.id == value.parent_id)].level == '0'){
+                    //костыль
                     axios.get('/api/getcomments')
                             .then(response => this.array = response.data)
-                  }
-                      this.array[this.array.findIndex(i => i.id == value.parent_id)].replies.push(response);
-
                   })
                   .catch(error => console.log(error.message));
 
@@ -97,14 +94,13 @@ export default {
       });
     axios.delete('/api/deletecomment', {params: {id: value.id}})
     .then(
-    this.array.splice(this.array.findIndex(i => i.id == value.id), 1))
-    .catch(error => {console.log(error)
-     if(this.array.findIndex(i => i.id == value.id) == this.array.length){
-         this.array.splice(-1,1);
-     } else {
-     this.array.splice(this.array.findIndex(i => i.id == value.id), 1);
-   }});
-
+        this.array.splice(this.array.findIndex(i => i.id == value.parent_id), 1))
+        .catch(error => {console.log(error)
+         if(this.array.findIndex(i => i.id == value.id) == this.array.length){
+             this.array.splice(-1,1);
+         } else {
+         this.array.splice(this.array.findIndex(i => i.id == value.parent_id), 1);
+       }});
 }
   }
 );

@@ -17,7 +17,7 @@ class Comment extends Model
    {
      $validator = new Validation($value);
 
-     if(!$validator->commentsFails()){
+     if(!$validator->commentFails()){
      return Comment::create(['parent_id' => $value->parent_id,
                                  'level' => $value->level,
                                  'body' => $value->body,]);
