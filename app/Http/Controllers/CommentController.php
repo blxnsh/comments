@@ -21,25 +21,19 @@ class CommentController extends Controller
 
     public function postComment(Request $request)
      {
-       $this->validate($request, ['level' => 'required',
-                                  'parent_id' => 'required',
-                                  'body' => 'required',]);
-
-        $comment = Comment::create(['parent_id' => $request->parent_id,
-                                    'level' => $request->level,
-                                    'body' => $request->body,]);
+        $comment = Comment::createComment($request);
         return $comment;
      }
 
      public function deleteComment(Request $request)
       {
-          Comment::find($request->id)->delete();
+          Comment::deleteComment($request);
           return "true";
       }
 
      public function updateComment(Request $request)
       {
-           $updcomment = Comment::find($request->id)->update($request->all());
+          Comment::find($request->id)->update($request->all());
           return "true";
       }
 }

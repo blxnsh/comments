@@ -17,29 +17,34 @@
     "cross-env": "^5.0.1",
     "laravel-mix": "^1.0",
     "lodash": "^4.17.4",
-    "vue": "^2.1.10"
+    "vue": "^2.1.10",
+    "vue-router": "^3.0.1"
   },
   "dependencies": {
-    "bootstrap": "^3.3.7"
+    "bootstrap": "^3.3.7",
+    "sweetalert": "^2.0.8"
   },
   "name": "comments",
   "description": "Тестовое задание / Solar",
   "version": "1.0.0",
   "main": "webpack.mix.js",
-  "directories": {},
+  "directories": {
+    "test": "tests"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/blxnsh/comments.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "blxnsh",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/blxnsh/comments/issues"
   },
   "ava": {
     "files": [
-      "resources/assets/js/test.js"]
-    },
+      "resources/assets/js/test.js"
+    ]
+  },
   "homepage": "https://github.com/blxnsh/comments#readme"
 }

@@ -7,7 +7,6 @@
                   v-if="comment.level == 0"
                   :array="commentsArray"
                   :comment="comment"
-                  @addComment="addComment"
                   :key="index">
                 </comment >
 

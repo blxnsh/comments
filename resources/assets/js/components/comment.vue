@@ -70,12 +70,13 @@ export default {
       });
       this.crud.post('/api/postcomment')
               .then(response => {
-                  if(typeof this.array[this.array.findIndex(i => i.id == this.comment.id)] === 'undefined'){
-                    this.array[this.array.findIndex(i => i.parent_id == value.id) + 1].replies.push(response);
-                  } else
-                    {
-                      this.array[this.array.findIndex(i => i.id == this.comment.id)].replies.push(response);
-                    }
+              //костыль
+                  if(typeof this.array[this.array.findIndex(i => i.id == value.parent_id)] === 'undefined' || this.array[this.array.findIndex(i => i.id == value.parent_id)].level == '0'){
+                    axios.get('/api/getcomments')
+                            .then(response => this.array = response.data)
+                  }
+                      this.array[this.array.findIndex(i => i.id == value.parent_id)].replies.push(response);
+
                   })
                   .catch(error => console.log(error.message));
 
@@ -95,17 +96,15 @@ export default {
         icon: "success",
       });
     axios.delete('/api/deletecomment', {params: {id: value.id}})
+    .then(
+    this.array.splice(this.array.findIndex(i => i.id == value.id), 1))
     .catch(error => {console.log(error)
      if(this.array.findIndex(i => i.id == value.id) == this.array.length){
          this.array.splice(-1,1);
      } else {
      this.array.splice(this.array.findIndex(i => i.id == value.id), 1);
    }});
-if(this.array.findIndex(i => i.id == value.id) == this.array.length){
-   this.array.splice(-1,1);
-} else {
-this.array.splice(this.array.findIndex(i => i.id == value.id), 1);
-}
+
 }
   }
 );

@@ -12,7 +12,3 @@
 */
 
 Route::get('/', 'CommentController@home');
-Route::get('/api/getcomments', 'CommentController@getComments');
-Route::post('/api/postcomment', 'CommentController@postComment');
-Route::delete('/api/deletecomment', 'CommentController@deleteComment');
-Route::put('/api/updatecomment', 'CommentController@updateComment');

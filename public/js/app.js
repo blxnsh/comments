@@ -16267,7 +16267,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -16282,7 +16282,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__commentform___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__commentform__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__comment__ = __webpack_require__(58);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__comment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__comment__);
-//
 //
 //
 //
@@ -16584,7 +16583,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -16670,17 +16669,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         body: value.body
       });
       this.crud.post('/api/postcomment').then(function (response) {
+        //костыль
         if (typeof _this.array[_this.array.findIndex(function (i) {
-          return i.id == _this.comment.id;
-        })] === 'undefined') {
-          _this.array[_this.array.findIndex(function (i) {
-            return i.parent_id == value.id;
-          }) + 1].replies.push(response);
-        } else {
-          _this.array[_this.array.findIndex(function (i) {
-            return i.id == _this.comment.id;
-          })].replies.push(response);
+          return i.id == value.parent_id;
+        })] === 'undefined' || _this.array[_this.array.findIndex(function (i) {
+          return i.id == value.parent_id;
+        })].level == '0') {
+          axios.get('/api/getcomments').then(function (response) {
+            return _this.array = response.data;
+          });
         }
+        _this.array[_this.array.findIndex(function (i) {
+          return i.id == value.parent_id;
+        })].replies.push(response);
       }).catch(function (error) {
         return console.log(error.message);
       });
@@ -16701,7 +16702,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           swal("Коментарий удален!", {
             icon: "success"
           });
-          axios.delete('/api/deletecomment', { params: { id: value.id } }).catch(function (error) {
+          axios.delete('/api/deletecomment', { params: { id: value.id } }).then(_this2.array.splice(_this2.array.findIndex(function (i) {
+            return i.id == value.id;
+          }), 1)).catch(function (error) {
             console.log(error);
             if (_this2.array.findIndex(function (i) {
               return i.id == value.id;
@@ -16713,15 +16716,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               }), 1);
             }
           });
-          if (_this2.array.findIndex(function (i) {
-            return i.id == value.id;
-          }) == _this2.array.length) {
-            _this2.array.splice(-1, 1);
-          } else {
-            _this2.array.splice(_this2.array.findIndex(function (i) {
-              return i.id == value.id;
-            }), 1);
-          }
         }
       });
     },
@@ -16886,8 +16880,7 @@ var render = function() {
             return comment.level == 0
               ? _c("comment", {
                   key: index,
-                  attrs: { array: _vm.commentsArray, comment: comment },
-                  on: { addComment: _vm.addComment }
+                  attrs: { array: _vm.commentsArray, comment: comment }
                 })
               : _vm._e()
           }),
