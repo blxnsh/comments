@@ -1,10 +1,12 @@
 <template lang="html">
 <div>
-  <div class="form-group">
-    <textarea class="form-control" rows="2"
-    v-model="comment.body" v-focus placeholder="Писать сюда :)"></textarea>
-  </div>
-  <button class="btn btn-primary" @click="letsGo">Оставить коментарий</button>
+    <form @submit.prevent="letsGo">
+    <div class="form-group">
+      <textarea class="form-control" rows="2" id="comment-form"
+      v-model="commentReplyForm.body" v-focus placeholder="Писать сюда :)"></textarea>
+    </div>
+    <button :dusk="getId()" class="btn btn-primary" type="submit">Оставить коментарий</button>
+    </form>
 <hr>
 </div>
 </template>
@@ -13,7 +15,7 @@
 export default {
   data(){
     return {
-      comment: new Crud({
+      commentReplyForm: new Crud({
         body: '',
         level: this.level,
         parent_id: this.parent_id,
@@ -23,9 +25,12 @@ export default {
 props:
  ['level', 'parent_id'],
 methods: {
+  getId(){
+    return 'comment-add-' + this.parent_id;
+  },
   letsGo() {
-    this.comment.level = parseInt(this.level) + 1;
-    this.$emit('doComment', this.comment);
+    this.commentReplyForm.level = parseInt(this.level) + 1;
+    this.$emit('doComment', this.commentReplyForm);
   }
 }
 }

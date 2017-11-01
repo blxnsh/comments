@@ -8,15 +8,15 @@
 
                 <div class="panel-body">
                     <p>{{comment.body}}</p>
-                    <a @click="showReply(comment.id)">Ответить</a>
-                    <a @click="updateComment(comment)">Редактировать</a>
-                    <a @click="deleteComment(comment)">Удалить</a>
+                    <a @click="showReply(comment.id)" dusk="open-reply">Ответить</a>
+                    <a @click="updateComment(comment)" dusk="open-edit">Редактировать</a>
+                    <a @click="deleteComment(comment)" dusk="delete">Удалить</a>
                  </div>
             </div>
             <commentform
               v-if="replyForm == comment.id"
               @doComment="addComment"
-              :array="array"
+              :commArray="array"
               :level="comment.level"
               :parent_id="comment.id"
               >
@@ -24,7 +24,7 @@
      </div>
 
       <div v-if="typeof array[array.findIndex(i => i.id == comment.id)] !== 'undefined'">
-        <comment
+        <comment dusk="comment"
             v-if="array[array.findIndex(i => i.id == comment.id)].replies"
             v-for="(reply, index) in array[array.findIndex(i => i.id == comment.id)].replies"
             :comment="reply"
@@ -93,17 +93,19 @@ export default {
         icon: "success",
       });
     axios.delete('/api/deletecomment', {params: {id: value.id}})
-    .then(
-        this.array.splice(this.array.findIndex(i => i.id == value.parent_id), 1))
-        .catch(error => {console.log(error)
-         if(this.array.findIndex(i => i.id == value.id) == this.array.length){
-             this.array.splice(-1,1);
-         } else {
-         this.array.splice(this.array.findIndex(i => i.id == value.parent_id), 1);
-       }});
-}
-  }
-);
+    .then(response =>
+          { if(this.array.findIndex(i => i.id == value.id) == this.array.length){
+               this.array.splice(-1,1);
+           } else {
+           this.array.splice(this.array.findIndex(i => i.id == value.parent_id), 1);
+       }})
+      .catch(error => {
+        console.log(error.message);
+        axios.get('/api/getcomments')
+                .then(response => this.array = response.data);
+      });
+    }
+  });
 },
     updateComment(value) {
     swal({

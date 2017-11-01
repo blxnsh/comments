@@ -1,6 +1,7 @@
 import VueRouter from 'vue-router';
 import Crud from './core/crud';
 import swal from 'sweetalert';
+import Vue from 'vue';
 
 window.Vue = require('vue');
 window.axios = require('axios');

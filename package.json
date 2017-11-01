@@ -11,17 +11,24 @@
     "test": "ava"
   },
   "devDependencies": {
-    "ava": "^0.11.0",
+    "ava": "^0.23.0",
     "axios": "^0.16.2",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
     "bootstrap-sass": "^3.3.7",
+    "browser-env": "^3.2.1",
     "cross-env": "^5.0.1",
     "laravel-mix": "^1.0",
-    "lodash": "^4.17.4",
+    "require-extension-hooks": "^0.3.2",
+    "require-extension-hooks-vue": "^0.4.1",
     "vue": "^2.1.10",
     "vue-router": "^3.0.1"
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "selenium-webdriver": "^3.6.0",
     "sweetalert": "^2.0.8"
   },
   "name": "comments",
@@ -44,7 +51,12 @@
   "ava": {
     "files": [
       "resources/assets/js/test.js"
-    ]
-  },
-  "homepage": "https://github.com/blxnsh/comments#readme"
+    ],
+    "require": [
+      "babel-register",
+      "./tests/setup.js"
+    ],
+    "babel": "inherit",
+    "homepage": "https://github.com/blxnsh/comments#readme"
+  }
 }

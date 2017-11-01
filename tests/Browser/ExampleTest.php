@@ -17,7 +17,12 @@ class ExampleTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/')
-                    ->assertVue('пост', 'post-component');
+                    ->maximize()
+                    ->assertSee('Коментарии')
+                    ->value('#comment-form', 'ffs')
+                    ->click('@comment-add-0')
+                    ->pause(1000)
+                    ->assertSee('ffs');
         });
     }
 }

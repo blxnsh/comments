@@ -4,6 +4,7 @@
      <div class="col-md-8 col-md-offset-2">
        <p><h3>Коментарии:</h3></p>
                 <comment v-for="(comment,index) in commentsArray"
+                  dusk="comment"
                   v-if="comment.level == 0"
                   :commArray="commentsArray"
                   :comment="comment"
