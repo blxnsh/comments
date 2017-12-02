@@ -61,7 +61,7 @@ export default {
       return offset;
     },
     showReply(value){
-      this.replyForm == value ? this.replyForm = 0 : this.replyForm = value
+      this.replyForm == value ? this.replyForm = 0 : this.replyForm = value;
     },
     addComment(value){
 
@@ -118,7 +118,7 @@ export default {
                         this.updcom.put('/api/updatecomment')});
 },
 deleteCommentReply(value){
-   this.array.splice(this.array.findIndex(i => i.id == value.parent_id), 1);  
+   this.array.splice(this.array.findIndex(i => i.id == value.parent_id), 1);
 }
 }
 }
