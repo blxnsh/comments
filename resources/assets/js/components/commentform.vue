@@ -2,7 +2,7 @@
 <div>
     <form @submit.prevent="letsGo">
     <div class="form-group">
-      <textarea class="form-control" rows="2" id="comment-form"
+      <textarea class="form-control" rows="2" :id="getFormId()"
       v-model="commentReplyForm.body" v-focus placeholder="Писать сюда :)"></textarea>
     </div>
     <button :dusk="getId()" class="btn btn-primary" type="submit">Оставить коментарий</button>
@@ -27,6 +27,9 @@ props:
 methods: {
   getId(){
     return 'comment-add-' + this.parent_id;
+  },
+  getFormId(){
+    return 'comment-form-' + this.parent_id;
   },
   letsGo() {
     this.commentReplyForm.level = parseInt(this.level) + 1;

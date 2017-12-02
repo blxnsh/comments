@@ -8,9 +8,9 @@
 
                 <div class="panel-body">
                     <p>{{comment.body}}</p>
-                    <a @click="showReply(comment.id)" dusk="open-reply">Ответить</a>
-                    <a @click="updateComment(comment)" dusk="open-edit">Редактировать</a>
-                    <a @click="deleteComment(comment)" dusk="delete">Удалить</a>
+                    <a @click="showReply(comment.id)">Ответить</a>
+                    <a @click="updateComment(comment)">Редактировать</a>
+                    <a @click="deleteComment(comment)">Удалить</a>
                  </div>
             </div>
             <commentform
@@ -24,12 +24,13 @@
      </div>
 
       <div v-if="typeof array[array.findIndex(i => i.id == comment.id)] !== 'undefined'">
-        <comment dusk="comment"
+        <comment
             v-if="array[array.findIndex(i => i.id == comment.id)].replies"
-            v-for="(reply, index) in array[array.findIndex(i => i.id == comment.id)].replies"
+            v-for="reply in array[array.findIndex(i => i.id == comment.id)].replies"
             :comment="reply"
             :commArray="array"
-            :key="index"
+            :key="reply.id"
+            @doDelete="deleteCommentReply"
             >
         </comment>
       </div>
@@ -94,11 +95,9 @@ export default {
       });
     axios.delete('/api/deletecomment', {params: {id: value.id}})
     .then(response =>
-          { if(this.array.findIndex(i => i.id == value.id) == this.array.length){
-               this.array.splice(-1,1);
-           } else {
-           this.array.splice(this.array.findIndex(i => i.id == value.parent_id), 1);
-       }})
+      {
+        this.$emit('doDelete', value)
+      })
       .catch(error => {
         console.log(error.message);
         axios.get('/api/getcomments')
@@ -118,6 +117,9 @@ export default {
       .then(response => {this.updcom = new Crud(value);
                         this.updcom.put('/api/updatecomment')});
 },
+deleteCommentReply(value){
+   this.array.splice(this.array.findIndex(i => i.id == value.parent_id), 1);  
+}
 }
 }
 </script>

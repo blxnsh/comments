@@ -3,12 +3,14 @@
     <div class="row">
      <div class="col-md-8 col-md-offset-2">
        <p><h3>Коментарии:</h3></p>
-                <comment v-for="(comment,index) in commentsArray"
-                  dusk="comment"
+                <comment
+                  v-for="comment in commentsArray"
                   v-if="comment.level == 0"
                   :commArray="commentsArray"
                   :comment="comment"
-                  :key="index">
+                  :key="comment.id"
+                  @doDelete="deleteCommentReply"
+                  >
                 </comment >
 
             <p><h3>Отставить коментарий</h3></p>
@@ -70,9 +72,12 @@ methods: {
     parent_id: '',
     body: ''});
     this.replyForm = 0;
+  },
+  deleteCommentReply(value){
+     this.commentsArray.splice(this.commentsArray.findIndex(i => i.id == value.parent_id), 1);
   }
-},
 
+}
 }
 </script>
 
