@@ -44,26 +44,26 @@ export default {
   components: {
     commentform
   },
-  name:'comment',
-  data(){
-  return   {
-    replyForm: 0,
-    updcom: '',
-    crud: '',
-    array: this.commArray
-  };
+  name: 'comment',
+  data() {
+    return {
+      replyForm: 0,
+      updcom: '',
+      crud: '',
+      array: this.commArray
+    };
   },
   props: ['comment', 'commArray'],
   methods: {
-    replyOffset(value){
+    replyOffset(value) {
       value = value < 9 ? value : 8;
       let offset = 'col-xs-offset-' + value;
       return offset;
     },
-    showReply(value){
+    showReply(value) {
       this.replyForm == value ? this.replyForm = 0 : this.replyForm = value;
     },
-    addComment(value){
+    addComment(value) {
 
       this.crud = new Crud({
         parent_id: value.parent_id,
@@ -71,56 +71,61 @@ export default {
         body: value.body,
       });
       this.crud.post('/api/postcomment')
-              .then(response => {
-                    //костыль
-                    axios.get('/api/getcomments')
-                            .then(response => this.array = response.data)
-                  })
-                  .catch(error => console.log(error.message));
+        .then(response => {
+          //костыль
+          axios.get('/api/getcomments')
+            .then(response => this.array = response.data)
+        })
+        .catch(error => console.log(error.message));
 
       this.replyForm = 0;
-},
+    },
     deleteComment(value) {
-    swal({
-      title: "Вы уверены?",
-      text: "Комментарий #" + value.id + " будет уделен",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
+      swal({
+          title: "Вы уверены?",
+          text: "Комментарий #" + value.id + " будет уделен",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
         })
-      .then((willDelete) => {
-    if (willDelete) {
-      swal("Коментарий удален!", {
-        icon: "success",
-      });
-    axios.delete('/api/deletecomment', {params: {id: value.id}})
-    .then(response =>
-      {
-        this.$emit('doDelete', value)
-      })
-      .catch(error => {
-        console.log(error.message);
-        axios.get('/api/getcomments')
-                .then(response => this.array = response.data);
-      });
-    }
-  });
-},
+        .then((willDelete) => {
+          if (willDelete) {
+            swal("Коментарий удален!", {
+              icon: "success",
+            });
+            axios.delete('/api/deletecomment', {
+                params: {
+                  id: value.id
+                }
+              })
+              .then(response => {
+                this.$emit('doDelete', value)
+              })
+              .catch(error => {
+                console.log(error.message);
+                axios.get('/api/getcomments')
+                  .then(response => this.array = response.data);
+              });
+          }
+        });
+    },
     updateComment(value) {
-    swal({
-      text: 'Изменить Коментарий #' + value.id,
-      content: "input",
-      buttons: true,
-      dangerMode: true,
+      swal({
+          text: 'Изменить Коментарий #' + value.id,
+          content: "input",
+          buttons: true,
+          dangerMode: true,
         })
-      .then(name => value.body = name)
-      .then(response => {this.updcom = new Crud(value);
-                        this.updcom.put('/api/updatecomment')});
-},
-deleteCommentReply(value){
-   this.array.splice(this.array.findIndex(i => i.id == value.parent_id), 1);
-}
-}
+        .then(name => value.body = name)
+        .then(response => {
+          this.updcom = new Crud(value);
+          this.updcom.put('/api/updatecomment')
+        });
+    },
+    deleteCommentReply(value) {
+      this.array.splice(this.array.findIndex(i => i.id == value.parent_id), 1);
+    }
+  }
 }
 </script>
 

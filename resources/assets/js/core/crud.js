@@ -4,52 +4,45 @@
 class Crud {
 
   constructor(data) {
-        this.originalData = data;
+    this.originalData = data;
 
-        for (let field in data) {
-            this[field] = data[field];
-        }
-
+    for (let field in data) {
+      this[field] = data[field];
     }
 
+  }
 
-    data() {
-        let data = {};
+  data() {
+    let data = {};
 
-        for (let property in this.originalData) {
-            data[property] = this[property];
-        }
-
-        return data;
+    for (let property in this.originalData) {
+      data[property] = this[property];
     }
 
+    return data;
+  }
 
-    post(url) {
-        return this.submit('post', url);
-    }
+  post(url) {
+    return this.submit('post', url);
+  }
 
+  put(url) {
+    return this.submit('put', url);
+  }
 
-    put(url) {
-        return this.submit('put', url);
-    }
+  patch(url) {
+    return this.submit('patch', url);
+  }
 
+  delete(url) {
+    return this.submit('delete', url);
+  }
 
-    patch(url) {
-        return this.submit('patch', url);
-    }
-
-    delete(url) {
-        return this.submit('delete', url);
-    }
-
-
-    submit(requestType, url) {
-        return new Promise((resolve, reject) => {
-            axios[requestType](url, this.data())
-                .then(response => resolve(response.data))
-                .catch(error => console.log(error.message));
-        });
-    }
+  submit(requestType, url) {
+    return new Promise((resolve, reject) => {
+      axios[requestType](url, this.data()).then(response => resolve(response.data)).catch(error => console.log(error.message));
+    });
+  }
 
 }
 

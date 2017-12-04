@@ -33,51 +33,51 @@ export default {
     commentform,
     comment
   },
-data(){
-  return {
-    commentsArray: [],
-    crud: new Crud({
-      level: '',
-      parent_id: '',
-      body: ''
-    }),
-  };
-},
+  data() {
+    return {
+      commentsArray: [],
+      crud: new Crud({
+        level: '',
+        parent_id: '',
+        body: ''
+      }),
+    };
+  },
   mounted() {
-  axios.get('/api/getcomments')
-          .then(response => this.commentsArray = response.data)
-          .then(console.log('Comments loaded!'))
-          .catch(error => console.log(error.message));
-},
-methods: {
-  doIndex(value){
-    for(let i = 0; i < value.length; i++){
-      value[i].index = i;
+    axios.get('/api/getcomments')
+      .then(response => this.commentsArray = response.data)
+      .then(console.log('Comments loaded!'))
+      .catch(error => console.log(error.message));
+  },
+  methods: {
+    doIndex(value) {
+      for (let i = 0; i < value.length; i++) {
+        value[i].index = i;
+      }
+      return value;
+    },
+    addComment(value) {
+      this.crud = new Crud({
+        parent_id: value.parent_id,
+        level: value.level,
+        body: value.body,
+      });
+      this.crud.post('/api/postcomment')
+        .then(response => this.commentsArray.push(response))
+        .then(console.log('Comments pushed!'))
+        .catch(error => console.log(error.message));
+
+      this.crud = new Crud({
+        level: '',
+        parent_id: '',
+        body: ''
+      });
+      this.replyForm = 0;
+    },
+    deleteCommentReply(value) {
+      this.commentsArray.splice(this.commentsArray.findIndex(i => i.id == value.parent_id), 1);
     }
-    return value;
-  },
-  addComment(value){
-    this.crud = new Crud({
-      parent_id: value.parent_id,
-      level: value.level,
-      body: value.body,
-    });
-    this.crud.post('/api/postcomment')
-            .then(response => this.commentsArray.push(response))
-            .then(console.log('Comments pushed!'))
-                .catch(error => console.log(error.message));
-
-  this.crud = new Crud({
-    level: '',
-    parent_id: '',
-    body: ''});
-    this.replyForm = 0;
-  },
-  deleteCommentReply(value){
-     this.commentsArray.splice(this.commentsArray.findIndex(i => i.id == value.parent_id), 1);
   }
-
-}
 }
 </script>
 

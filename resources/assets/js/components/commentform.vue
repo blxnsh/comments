@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  data(){
+  data() {
     return {
       commentReplyForm: new Crud({
         body: '',
@@ -21,21 +21,20 @@ export default {
         parent_id: this.parent_id,
       })
     };
-},
-props:
- ['level', 'parent_id'],
-methods: {
-  getId(){
-    return 'comment-add-' + this.parent_id;
   },
-  getFormId(){
-    return 'comment-form-' + this.parent_id;
-  },
-  letsGo() {
-    this.commentReplyForm.level = parseInt(this.level) + 1;
-    this.$emit('doComment', this.commentReplyForm);
+  props: ['level', 'parent_id'],
+  methods: {
+    getId() {
+      return 'comment-add-' + this.parent_id;
+    },
+    getFormId() {
+      return 'comment-form-' + this.parent_id;
+    },
+    letsGo() {
+      this.commentReplyForm.level = parseInt(this.level) + 1;
+      this.$emit('doComment', this.commentReplyForm);
+    }
   }
-}
 }
 </script>
 

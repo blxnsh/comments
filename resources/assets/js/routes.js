@@ -7,6 +7,4 @@ let routes = [
   }
 ];
 
-export default new VueRouter({
-  routes
-  });
+export default new VueRouter({routes});

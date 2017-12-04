@@ -4,17 +4,19 @@ namespace App;
 
 use Validator;
 
-class Validation {
+class Validation
+{
+    public $validator;
 
-  public $validator;
-
-  function __construct($value) {
-    $this->validator = Validator::make($value->all(), ['level' => 'required',
+    public function __construct($value)
+    {
+        $this->validator = Validator::make($value->all(), ['level' => 'required',
                                'parent_id' => 'required',
                                'body' => 'required',]);
-   }
+    }
 
-  public function commentFails(){
-    return $this->validator->fails();
-   }
+    public function commentFails()
+    {
+        return $this->validator->fails();
+    }
 }
